@@ -5,6 +5,60 @@
     <title></title>
 </head>
 <body>
+    <table>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Address
+            </th>
+            <th>Actions</th>
+        </tr>
 
+        <tbody data-bind="foreach: customers">
+            <tr>
+                <td data-bind="text: Id"></td>
+                <td data-bind="text: Name"></td>
+                <td data-bind="text: Address"></td>
+
+                <td>
+                    <a href="javascript:void(0);" data-bind="click: $parent.viewCustomer"
+                       class="btn-details btn btn-default">Details</a>
+                    <a href="javascript:void(0);" data-bind="click: $parent.editCustomer"
+                       class="btn-edit btn btn-default">Edit</a>
+                    <a href="javascript:void(0);" data-bind="click: $parent.deleteCustomer"
+                       class="btn-delete btn btn-default">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
 </body>
 </html>
+<script src="../scripts/knockout-3.4.2.js"></script>
+<script src="../scripts/jquery-3.3.1.js"></script>
+<script src="../scripts/knockout.mapping-latest.js"></script>
+<script>
+    var dataVm = {
+        customers: [
+            { "Id": 0, "Name": "lei", "Address": "Shanghai" },
+            { "Id": 1, "Name": "Andy", "Address": "Melbourne" }
+        ]
+    }
+
+    function customerViewModel(data) {
+        var self = this;
+        this.Id = ko.observable(data.Id);
+        this.Name = ko.observable(data.Name);
+        this.Address = ko.observable(data.Address);
+    }
+
+    var viewModel = ko.mapping.fromJS(dataVm, customerViewModel);
+
+    ko.applyBindings(viewModel);
+
+</script>
