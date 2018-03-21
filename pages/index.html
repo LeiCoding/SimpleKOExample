@@ -34,9 +34,9 @@
                     <td data-bind="text: Name"></td>
                     <td data-bind="text: Address"></td>
                     <td>
-                        <a href="javascript:void(0);" data-bind="click: $parent.viewCustomer" class="btn-details btn btn-default">Details</a>
-                        <a href="javascript:void(0);" data-bind="click: $parent.editCustomer" class="btn-edit btn btn-default">Edit</a>
-                        <a href="javascript:void(0);" data-bind="click: $parent.deleteCustomer" class="btn-delete btn btn-default">Delete</a>
+                        <a href="javascript:void(0);" data-bind="click: $parent.viewCustomer" class="btn btn-info">Details</a>
+                        <a href="javascript:void(0);" data-bind="click: $parent.editCustomer" class=" btn btn-primary">Edit</a>
+                        <a href="javascript:void(0);" data-bind="click: $parent.deleteCustomer" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
             </tbody>
@@ -49,7 +49,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Modal title</h5>
+                        <h5 class="modal-title">Create</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -69,13 +69,30 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Modal title</h5>
+                        <h5 class="modal-title">Details</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>detail</p>
+                        <div id="customer-details" data-bind="">
+                            <h4>Customer Details</h4>
+                            <hr />
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    Name
+                                </dt>
+                                <dd>
+                                    <div data-bind=""></div>
+                                </dd>
+                                <dt>
+                                    Address
+                                </dt>
+                                <dd>
+                                    <div data-bind=""></div>
+                                </dd>
+                            </dl>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary">Save changes</button>
@@ -89,7 +106,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Modal title</h5>
+                        <h5 class="modal-title">Edit</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -109,7 +126,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Modal title</h5>
+                        <h5 class="modal-title">Delete</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -127,18 +144,14 @@
 
         <script src="../scripts/knockout-3.4.2.js"></script>
         <script src="../scripts/jquery-3.3.1.js"></script>
-        <script src="../scripts/knockout.mapping-latest.js"></script>
+        <!--<script src="../scripts/knockout.mapping-latest.js"></script>-->
         <script src="../scripts/bootstrap.js"></script>
+        <script src="../scripts/custom.js"></script>
         <script>
 
-            var dataVm = {
-                customers: [
-                    { "Id": 0, "Name": "lei", "Address": "Shanghai", "isActive": true },
-                    { "Id": 1, "Name": "Andy", "Address": "Melbourne", "isActive": true }
-                ]
-            }
+            
 
-            function customerViewModel(data) {
+            /*function customerViewModel(data) {
                 var self = this;
                 this.Id = ko.observable(data.Id);
                 this.Name = ko.observable(data.Name);
@@ -146,7 +159,8 @@
                 this.isActive = ko.observable(data.isActive);
             }
 
-            var viewModel = ko.mapping.fromJS(dataVm, customerViewModel);
+            //var viewModel = ko.mapping.fromJS(dataVm, customerViewModel);
+
             viewModel.createCustomer = function () {
                 $('#createModal').modal('show');
             }
@@ -158,8 +172,21 @@
             }
             viewModel.deleteCustomer = function (customer) {
                 $('#deleteModal').modal('show');
+            }*/
+            var dataVm = {
+                customer1:
+                { "Id": 0, "Name": "lei", "Address": "Shanghai", "isActive": true },
+                customer2:{ "Id": 1, "Name": "Andy", "Address": "Melbourne", "isActive": true }
+                
             }
 
+
+            var viewModel = new customerViewModel();
+
+            for (var key in dataVm) {
+                customer = new Customer(dataVm[key]);
+                viewModel.customers.push(customer);
+            } 
             ko.applyBindings(viewModel);
 
         </script>
