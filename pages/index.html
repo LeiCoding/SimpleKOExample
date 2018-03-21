@@ -1,126 +1,172 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <link href="../Content/bootstrap.css" rel="stylesheet">
     <link href="../CSS/custom.css" rel="stylesheet">
 </head>
+
 <body>
-    <table>
-        <tr>
-            <th>
-                ID
-            </th>
-            <th>
-                Name
-            </th>
-            <th>
-                Address
-            </th>
-            <th>Actions</th>
-        </tr>
-
-        <tbody data-bind="foreach: customers">
+    <div class="container">
+        <h2>Customers info using knockoutjs</h2>
+        <p></p>
+        <input type="button" class="btn" value="Create" data-bind="click:createCustomer"/>
+        <p></p>
+        <table class="table">
             <tr>
-                <td data-bind="text: Id"></td>
-                <td data-bind="text: Name"></td>
-                <td data-bind="text: Address"></td>
-
-                <td>
-                    <a href="javascript:void(0);" data-bind="click: $parent.viewCustomer"
-                       class="btn-details btn btn-default">Details</a>
-                    <a href="javascript:void(0);" data-bind="click: $parent.editCustomer"
-                       class="btn-edit btn btn-default">Edit</a>
-                    <a href="javascript:void(0);" data-bind="click: $parent.deleteCustomer"
-                       class="btn-delete btn btn-default">Delete</a>
-                </td>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Address
+                </th>
+                <th>Actions</th>
             </tr>
-        </tbody>
 
-    </table>
-
-    <!-- Trigger/Open The Modal -->
-    <button id="myBtn">Open Modal</button>
-
-    <!-- The Modal -->
-    <div id="myModal" class="modal">
-
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <table>
-                <tr>
-                    <td>Id:</td>
-                    <td ></td>
+            <tbody data-bind="foreach: customers">
+                <tr data-bind="visible:isActive">
+                    <td data-bind="text: Id"></td>
+                    <td data-bind="text: Name"></td>
+                    <td data-bind="text: Address"></td>
+                    <td>
+                        <a href="javascript:void(0);" data-bind="click: $parent.viewCustomer" class="btn-details btn btn-default">Details</a>
+                        <a href="javascript:void(0);" data-bind="click: $parent.editCustomer" class="btn-edit btn btn-default">Edit</a>
+                        <a href="javascript:void(0);" data-bind="click: $parent.deleteCustomer" class="btn-delete btn btn-default">Delete</a>
+                    </td>
                 </tr>
-            </table>
+            </tbody>
+
+        </table>
+
+
+        <!-- The Modals -->
+        <div class="modal" tabindex="-1" role="dialog" id="createModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Create</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
-    </div>
+        <div class="modal" tabindex="-1" role="dialog" id="detailModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>detail</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" tabindex="-1" role="dialog" id="editModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>edit</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" tabindex="-1" role="dialog" id="deleteModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>delete</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="../scripts/knockout-3.4.2.js"></script>
+        <script src="../scripts/jquery-3.3.1.js"></script>
+        <script src="../scripts/knockout.mapping-latest.js"></script>
+        <script src="../scripts/bootstrap.js"></script>
+        <script>
+
+            var dataVm = {
+                customers: [
+                    { "Id": 0, "Name": "lei", "Address": "Shanghai", "isActive": true },
+                    { "Id": 1, "Name": "Andy", "Address": "Melbourne", "isActive": true }
+                ]
+            }
+
+            function customerViewModel(data) {
+                var self = this;
+                this.Id = ko.observable(data.Id);
+                this.Name = ko.observable(data.Name);
+                this.Address = ko.observable(data.Address);
+                this.isActive = ko.observable(data.isActive);
+            }
+
+            var viewModel = ko.mapping.fromJS(dataVm, customerViewModel);
+            viewModel.createCustomer = function () {
+                $('#createModal').modal('show');
+            }
+            viewModel.viewCustomer = function (customer) {
+                $('#detailModal').modal('show');
+            }
+            viewModel.editCustomer = function (customer) {
+                $('#editModal').modal('show');
+            }
+            viewModel.deleteCustomer = function (customer) {
+                $('#deleteModal').modal('show');
+            }
+
+            ko.applyBindings(viewModel);
+
+        </script>
+        </div>
+</body >
+
+</html >
 
 
-</body>
-</html>
-<script src="../scripts/knockout-3.4.2.js"></script>
-<script src="../scripts/jquery-3.3.1.js"></script>
-<script src="../scripts/knockout.mapping-latest.js"></script>
-<script>
-
-    // Get the modal
-    var modal = document.getElementById('myModal');
-
-    // Get the button that opens the modal
-    var btn = document.getElementById("myBtn");
-
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-
-    // When the user clicks on the button, open the modal 
-    btn.onclick = function () {
-        modal.style.display = "block";
-    }
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function () {
-        modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-
-
-
-
-    var dataVm = {
-        customers: [
-            { "Id": 0, "Name": "lei", "Address": "Shanghai" },
-            { "Id": 1, "Name": "Andy", "Address": "Melbourne" }
-        ]
-    }
-
-    function customerViewModel(data) {
-        var self = this;
-        this.Id = ko.observable(data.Id);
-        this.Name = ko.observable(data.Name);
-        this.Address = ko.observable(data.Address);
-        
-    }
-
-    var viewModel = ko.mapping.fromJS(dataVm, customerViewModel);
-    viewModel.viewCustomer = function () {
-        alert('view');
-    }
-    viewModel.editCustomer = function () {
-        alert('edit');
-    }
-    viewModel.deleteCustomer = function () {
-        alert('delete');
-    }
-
-    ko.applyBindings(viewModel);
-
-</script>
+    
