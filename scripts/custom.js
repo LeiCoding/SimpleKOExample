@@ -15,25 +15,42 @@
 function customerViewModel() {
     var self = this;
     self.customers = ko.observableArray();
+    self.selectCustomer = ko.observable();
+    self.newCustomer = ko.observable();
+    self.selectCustomerPoint = null;
 
     self.createCustomer = function () {
+        var customer = new Customer();
+        customer.Id(self.customers().length);
+        customer.isActive(true);
+        self.newCustomer(ko.toJS(customer));
         $('#createModal').modal('show');
     }
+    self.createConfirm = function () {
+        self.customers.push(new Customer(ko.toJS(self.newCustomer)));
+    }
     self.viewCustomer = function (customer) {
+        self.selectCustomer(customer);
         $('#detailModal').modal('show');
     }
     self.editCustomer = function (customer) {
+        self.selectCustomerPoint = customer;
+        self.newCustomer(new Customer(ko.toJS(customer)));
         $('#editModal').modal('show');
     }
+
+    self.editConfirm = function () {
+        self.customers.replace(self.selectCustomerPoint, new Customer(ko.toJS(self.newCustomer)));
+    }
+
     self.deleteCustomer = function (customer) {
+        self.selectCustomerPoint = customer;
+        self.selectCustomer(customer);
         $('#deleteModal').modal('show');
     }
-}
-
-function getCustomer(data) {
-    var customer;
-    $.each(data, function (i, item) {
-        customer = new Customer(item);
-        customerViewModel.customers.push(customer);
-    })
+    self.deleteConfirm = function () {
+        var customer = new Customer(ko.toJS(self.selectedCustomer));
+        customer.isActive(false);
+        self.customers.replace(self.selectCustomerPoint, customer);
+    }
 }
