@@ -194,16 +194,9 @@
         <script src="../scripts/jquery-3.3.1.js"></script>
         <script src="../scripts/bootstrap.js"></script>
         <script src="../scripts/custom.js"></script>
-        <script>
+        <script src="../data/customerdata.js"></script><script>
             $("document").ready(function () {
-                var dataVm = {
-                    customer1:
-                    { "Id": 0, "Name": "lei", "Address": "Shanghai", "isActive": true },
-                    customer2:
-                    { "Id": 1, "Name": "Andy", "Address": "Melbourne", "isActive": true }
-
-                }
-                
+   
                 var viewModel = new customerViewModel();
 
                 for (var key in dataVm) {
